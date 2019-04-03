@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { SearchComponentProps } from '../interfaces';
 
 const SearchInput = styled.input`
     position: relative;
@@ -8,12 +9,4 @@ const SearchInput = styled.input`
     size: 18px;
 `
 
-interface IProps {
-    onChange: (e: any) => void;
-    id: string;
-    type: string;
-    placeholder: string;
-    value: string;
-}
-
-export default (props: IProps) => <SearchInput {...props} />
+export default (props: SearchComponentProps) => <SearchInput {...props} />

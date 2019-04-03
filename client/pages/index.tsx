@@ -1,53 +1,50 @@
-import React, { Component, ChangeEvent } from 'react'
-import fetch from 'isomorphic-unfetch';
+import React, { useState } from 'react'
+import { apiCall } from '../helpers';
 
 import SearchInput from '../components/search'
 import ResultTable from '../components/table'
-import { ResultData } from '../components/table';
+import { ResultData } from '../interfaces';
+import { Flex, Box } from '@rebass/grid';
 
-// @ts-ignore
-import 'react-flexbox-grid/dist/react-flexbox-grid.css'
-// @ts-ignore
-import { Grid, Row, Col } from 'react-flexbox-grid/dist/react-flexbox-grid';
+export default () => {
+    const [input, setInput] = useState('');
+    const [resultSet, setResultSet] = useState<ResultData[]>([]);
+    const [isLoading, setLoading] = useState(false);
 
-interface IState {
-    input: string
-    data: ResultData[]
-}
-
-export default class ListComponent extends Component<{}, IState> {
-    state = { input: '', data: [] }
-
-    handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-        e.persist()
-        this.setState(state => ({ ...state, input: e.target.value }))
+    const handleSearch = async () => {
+        setLoading(true);
+        const apiResult: ResultData[] = await apiCall(`location/search/?query=${input}`)
+        setLoading(false);
+        setResultSet(apiResult);
     }
 
-    handleSearch = async () => {
-        const { input } = this.state;
-        const raw = await fetch(`https://www.metaweather.com/api/location/search/?query=${input}`);
-        const data = await raw.json();
-        this.setState(state => ({ ...state, data }))
+    const renderComponent = () => {
+        if (isLoading) {
+            return 'Loading...'
+        }
+
+        if (resultSet.length) {
+            return <ResultTable data={resultSet} />
+        }
+
+        return null
     }
 
-    render() {
-        const { input, data } = this.state
-        return (
-            <Grid fluid>
-                <Row center="xs">
-                    <Col>
-                        <SearchInput
-                            id="search"
-                            type="text"
-                            value={input}
-                            onChange={this.handleSearchChange}
-                            placeholder="Search Location"
-                        />
-                        <button onClick={this.handleSearch}>Search</button>
-                    </Col>
-                </Row>
-                {!!data.length && <ResultTable data={data} />}
-            </Grid>
-        )
-    }
+    return (
+        <>
+            <Flex alignItems="center">
+                <Box>
+                    <SearchInput
+                        id="search"
+                        type="text"
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        placeholder="Search Location"
+                    />
+                    <button onClick={handleSearch}>Search</button>
+                </Box>
+            </Flex>
+            {renderComponent()}
+        </>
+    )
 }

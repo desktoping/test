@@ -1,56 +1,49 @@
-import React from 'react'
+import Link from 'next/link';
+import React, { Fragment } from 'react';
+import { Box, Flex } from '@rebass/grid';
 import styled from 'styled-components';
-import Link from 'next/link'
+import { TableComponentProps } from '../interfaces';
 
+// Ignore typescript looking for definition
 // @ts-ignore
-import { Row, Col } from 'react-flexbox-grid/dist/react-flexbox-grid'
+import { Hide } from '@rebass/hide';
 
-export interface ResultData {
-    title: string
-    latt_long: string
-    location_type: string
-    woeid: number
-}
-
-interface IProps {
-    data: ResultData[]
-}
 
 const ResultTable = styled.div`
     position: relative;
     padding-top: 20px;
 `
 
-export default (props: IProps) => {
+export default (props: TableComponentProps) => {
     const { data } = props;
     return (
         <ResultTable>
-            <Row>
-                <Col xs={12} md={3}>TITLE</Col>
-                <Col xs={12} md={2}>LATITUDE</Col>
-                <Col xs={12} md={2}>LONGITUDE</Col>
-                <Col xs={12} md={2}>LOCATION TYPE</Col>
-                <Col xs={12} md={3}>WOEID</Col>
-            </Row>
+            <Flex>
+                <Box width={[1 / 3, 1 / 3, 1 / 5]}>TITLE</Box>
+                <Box width={[1 / 3, 1 / 3, 1 / 5]}>LATITUDE</Box>
+                <Box width={[1 / 3, 1 / 3, 1 / 5]}>LONGITUDE</Box>
+                <Box width={[0, 0, 1 / 5]}><Hide xsmall small>LOCATION TYPE</Hide></Box>
+                <Box width={[0, 0, 1 / 5]}><Hide xsmall small>WOEID</Hide></Box>
+            </Flex>
             <hr />
             {
                 data.map(({ title, latt_long, woeid, location_type }, key) => {
                     const [lat, long] = latt_long.split(',')
                     return (
-                        <>
-                            <Row key={key}>
-                                <Col xs={12} md={3}>
-                                    <Link href={{ pathname: '/location', query: { woeid }}}>
+                        <Fragment key={`${woeid}-${key}`}>
+                            <Flex>
+                                <Box width={[1 / 3, 1 / 3, 1 / 5]}>
+                                    <Link href={{ pathname: '/location', query: { woeid } }}>
                                         <a>{title}</a>
                                     </Link>
-                                </Col>
-                                <Col xs={12} md={2}>{lat}</Col>
-                                <Col xs={12} md={2}>{long}</Col>
-                                <Col xs={12} md={2}>{location_type}</Col>
-                                <Col xs={12} md={3}>{woeid}</Col>
-                            </Row>
+                                </Box>
+                                <Box width={[1 / 3, 1 / 3, 1 / 5]}>{lat}</Box>
+                                <Box width={[1 / 3, 1 / 3, 1 / 5]}>{long}</Box>
+                                <Box width={[0, 0, 1 / 5]}><Hide xsmall small>{location_type}</Hide></Box>
+                                <Box width={[0, 0, 1 / 5]}><Hide xsmall small>{woeid}</Hide></Box>
+                            </Flex>
                             <hr />
-                        </>
+                        </Fragment>
                     )
                 })
             }

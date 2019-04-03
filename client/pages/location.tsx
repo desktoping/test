@@ -1,53 +1,12 @@
-import React, { Component } from 'react'
 import fetch from 'isomorphic-unfetch';
 import { NextContext } from 'next';
-
-import InformationCard from '../components/card'
-
-// @ts-ignore
-import 'react-flexbox-grid/dist/react-flexbox-grid.css'
-// @ts-ignore
-import { Grid, Row, Col } from 'react-flexbox-grid/dist/react-flexbox-grid';
 import Link from 'next/link';
+import React, { Component } from 'react';
+import { LocationPageProps } from '../interfaces';
+import { Flex, Box } from '@rebass/grid';
+import WeatherCard from '../components/weather-card';
 
-interface ConsolidatedWeather {
-    id: number;
-    applicable_date: Date
-    weather_state_name: string
-    weater_state_abbr: string
-    wind_speed: number;
-    wind_direction: number;
-    wind_direction_compass: string
-    air_pressure: number;
-    humidity: number;
-    visibility: number
-    predictability: number
-    title: string
-    url: string
-}
-
-interface DataInformation {
-    title: string
-    location_type: string
-    latt_long: string
-    time: Date
-    sun_rise: Date
-    sun_set: Date
-    timezone_name: string
-    parent: {
-        title: string;
-        location_type: string;
-        latt_long: string;
-        woeid: number;
-    }
-    consolidated_weather: ConsolidatedWeather[]
-}
-
-interface IProps {
-    data?: DataInformation
-}
-
-export default class LocationInformation extends Component<IProps> {
+export default class LocationInformation extends Component<LocationPageProps> {
     static async getInitialProps({ query }: NextContext) {
         const { woeid } = query;
         const raw = await fetch(`https://www.metaweather.com/api/location/${woeid}`);
@@ -59,29 +18,52 @@ export default class LocationInformation extends Component<IProps> {
         const { data } = this.props
 
         if (data) {
-            const { title, location_type, latt_long, sun_rise, sun_set, timezone_name } = data;
+            const { title, location_type, latt_long, sun_rise, sun_set, timezone_name, consolidated_weather } = data;
             const [lat, long] = latt_long.split(',')
             return (
-                <Grid fluid>
+                <>
                     <Link href="/"><a>&lt;</a></Link>
                     <h3 style={{ textAlign: 'center' }}>{title}</h3>
-                    <Row>
-                        <Col xs={12} md={6}><InformationCard title="Location Type" value={location_type} /></Col>
-                        <Col xs={12} md={6}><InformationCard title="Timezone" value={timezone_name} /></Col>
-
-                    </Row>
-                    <Row>
-                        <Col xs={12} md={6}><InformationCard title="Lattitude" value={lat} /></Col>
-                        <Col xs={12} md={6}><InformationCard title="Longitude" value={long} /></Col>
-                    </Row>
-                    <Row>
-                        <Col xs={12} md={6}><InformationCard title="Sunrise" value={new Date(sun_rise).toLocaleTimeString()} /></Col>
-                        <Col xs={12} md={6}><InformationCard title="Sunset" value={new Date(sun_set).toLocaleTimeString()} /></Col>
-                    </Row>
-                </Grid>
+                    <Flex>
+                        <Box width={1 / 2}>Location Type: </Box>
+                        <Box width={1 / 2}>{location_type}</Box>
+                    </Flex>
+                    <hr />
+                    <Flex>
+                        <Box width={1 / 2}>Latitude</Box>
+                        <Box width={1 / 2}>{lat}</Box>
+                    </Flex>
+                    <hr />
+                    <Flex>
+                        <Box width={1 / 2}>Longitude</Box>
+                        <Box width={1 / 2}>{long}</Box>
+                    </Flex>
+                    <hr />
+                    <Flex>
+                        <Box width={1 / 2}>Timezone</Box>
+                        <Box width={1 / 2}>{timezone_name}</Box>
+                    </Flex>
+                    <hr />
+                    <Flex>
+                        <Box width={1 / 2}>Sunrise</Box>
+                        <Box width={1 / 2}>{new Date(sun_rise).toLocaleTimeString()}</Box>
+                    </Flex>
+                    <hr />
+                    <Flex>
+                        <Box width={1 / 2}>Sunset</Box>
+                        <Box width={1 / 2}>{new Date(sun_set).toLocaleTimeString()}</Box>
+                    </Flex>
+                    <hr />
+                    <h2>Weather</h2>
+                    <Flex>
+                        {consolidated_weather.slice(0, 3).map((weather, key) => (
+                            <WeatherCard {...weather} key={key} />
+                        ))}
+                    </Flex>
+                </>
             )
         }
-        
+
         return <div>No data found.</div>
     }
 }

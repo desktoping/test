@@ -126,6 +126,17 @@ module.exports = __webpack_require__(/*! core-js/library/fn/json/stringify */ "c
 
 /***/ }),
 
+/***/ "../node_modules/@babel/runtime-corejs2/core-js/object/assign.js":
+/*!***********************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/core-js/object/assign.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/object/assign */ "core-js/library/fn/object/assign");
+
+/***/ }),
+
 /***/ "../node_modules/@babel/runtime-corejs2/core-js/object/create.js":
 /*!***********************************************************************!*\
   !*** ../node_modules/@babel/runtime-corejs2/core-js/object/create.js ***!
@@ -407,6 +418,39 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   return Constructor;
+}
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime-corejs2/helpers/esm/extends.js":
+/*!*********************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/helpers/esm/extends.js ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _extends; });
+/* harmony import */ var _core_js_object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core-js/object/assign */ "../node_modules/@babel/runtime-corejs2/core-js/object/assign.js");
+/* harmony import */ var _core_js_object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_core_js_object_assign__WEBPACK_IMPORTED_MODULE_0__);
+
+function _extends() {
+  _extends = _core_js_object_assign__WEBPACK_IMPORTED_MODULE_0___default.a || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
 }
 
 /***/ }),
@@ -1052,21 +1096,10 @@ module.exports = __webpack_require__(/*! ./dist/client/link */ "../node_modules/
 
 /***/ }),
 
-/***/ "../node_modules/react-flexbox-grid/dist/react-flexbox-grid.css":
-/*!**********************************************************************!*\
-  !*** ../node_modules/react-flexbox-grid/dist/react-flexbox-grid.css ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ "./components/card.tsx":
-/*!*****************************!*\
-  !*** ./components/card.tsx ***!
-  \*****************************/
+/***/ "./components/weather-card.tsx":
+/*!*************************************!*\
+  !*** ./components/weather-card.tsx ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1074,37 +1107,93 @@ module.exports = __webpack_require__(/*! ./dist/client/link */ "../node_modules/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
-var _jsxFileName = "/Users/clouduser/test/client/components/card.tsx";
+/* harmony import */ var _rebass_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rebass/grid */ "@rebass/grid");
+/* harmony import */ var _rebass_grid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_rebass_grid__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
+var _jsxFileName = "/Users/clouduser/test/client/components/weather-card.tsx";
 
 
-var InformationCard = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
-  displayName: "card__InformationCard",
-  componentId: "sc-168khjl-0"
-})(["position:relative;size:18px;"]);
+
+var Image = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.img.withConfig({
+  displayName: "weather-card__Image",
+  componentId: "gawikd-0"
+})(["position:relative;width:100px;height:100px;"]);
+var weatherImageMap = {
+  // light rain
+  lr: 'http://www.transparentpng.com/thumb/weather-report/biggest-hits-and-news-sport-icons-png-22.png',
+  // showers
+  s: 'https://cdn3.iconfinder.com/data/icons/chubby-weather/439/rain_snow-512.png',
+  // heavy rain
+  hr: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPbz_j8cX55c9kkIIVj6xuL4GtaGTbTClDtWTz-JNbSPveLL-r',
+  // heavy cloud
+  hc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEv5Mc1Ga-UG2VkMMhJ6kkL2J8X6qr2w6xyLgYclgrPfmPgScu',
+  // light cloud
+  lc: 'https://www.freeiconspng.com/uploads/weather-icon-png-16.png',
+  // thunder
+  t: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7t99bYAXRK0kOj3paRAp9NnjfCEnfPkKcnkzWI38IjZrkiyCf'
+};
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var title = _ref.title,
-      value = _ref.value;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InformationCard, {
+  var weather_state_abbr = _ref.weather_state_abbr,
+      weather_state_name = _ref.weather_state_name,
+      applicable_date = _ref.applicable_date,
+      the_temp = _ref.the_temp,
+      visibility = _ref.visibility,
+      humidity = _ref.humidity,
+      wind_speed = _ref.wind_speed,
+      wind_direction_compass = _ref.wind_direction_compass;
+  console.log(weather_state_abbr, weather_state_name);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_1__["Box"], {
+    width: [1, 1 / 3],
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 45
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Image, {
+    src: "".concat(weatherImageMap[weather_state_abbr]),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 46
     },
     __self: this
-  }, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 47
     },
     __self: this
-  }, value));
+  }, "Date: ", applicable_date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 48
+    },
+    __self: this
+  }, "Temperature: ", the_temp.toFixed(2)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 49
+    },
+    __self: this
+  }, "Visibility: ", visibility.toFixed(2)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 50
+    },
+    __self: this
+  }, "Humidity: ", humidity.toFixed(2)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 51
+    },
+    __self: this
+  }, "Wind Speed: ", wind_speed.toFixed(2)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 52
+    },
+    __self: this
+  }, "Wind Direction: ", wind_direction_compass));
 });
 
 /***/ }),
@@ -1122,23 +1211,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "../node_modules/@babel/runtime-corejs2/regenerator/index.js");
 /* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/asyncToGenerator */ "../node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "../node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "../node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "../node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/extends */ "../node_modules/@babel/runtime-corejs2/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "../node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "../node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "../node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
 /* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
 /* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _components_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/card */ "./components/card.tsx");
-/* harmony import */ var react_flexbox_grid_dist_react_flexbox_grid_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-flexbox-grid/dist/react-flexbox-grid.css */ "../node_modules/react-flexbox-grid/dist/react-flexbox-grid.css");
-/* harmony import */ var react_flexbox_grid_dist_react_flexbox_grid_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_flexbox_grid_dist_react_flexbox_grid_css__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-flexbox-grid/dist/react-flexbox-grid */ "react-flexbox-grid/dist/react-flexbox-grid");
-/* harmony import */ var react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! next/link */ "../node_modules/next/link.js");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/link */ "../node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _rebass_grid__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @rebass/grid */ "@rebass/grid");
+/* harmony import */ var _rebass_grid__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _components_weather_card__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/weather-card */ "./components/weather-card.tsx");
+
 
 
 
@@ -1150,9 +1239,6 @@ __webpack_require__.r(__webpack_exports__);
 var _jsxFileName = "/Users/clouduser/test/client/pages/location.tsx";
 
 
- // @ts-ignore
-
- // @ts-ignore
 
 
 
@@ -1160,15 +1246,15 @@ var _jsxFileName = "/Users/clouduser/test/client/pages/location.tsx";
 var LocationInformation =
 /*#__PURE__*/
 function (_Component) {
-  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__["default"])(LocationInformation, _Component);
+  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_8__["default"])(LocationInformation, _Component);
 
   function LocationInformation() {
-    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, LocationInformation);
+    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, LocationInformation);
 
-    return Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(LocationInformation).apply(this, arguments));
+    return Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(LocationInformation).apply(this, arguments));
   }
 
-  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(LocationInformation, [{
+  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(LocationInformation, [{
     key: "render",
     value: function render() {
       var data = this.props.data;
@@ -1179,163 +1265,220 @@ function (_Component) {
             latt_long = data.latt_long,
             sun_rise = data.sun_rise,
             sun_set = data.sun_set,
-            timezone_name = data.timezone_name;
+            timezone_name = data.timezone_name,
+            consolidated_weather = data.consolidated_weather;
 
         var _latt_long$split = latt_long.split(','),
-            _latt_long$split2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_latt_long$split, 2),
+            _latt_long$split2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_latt_long$split, 2),
             lat = _latt_long$split2[0],
             long = _latt_long$split2[1];
 
-        return react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Grid"], {
-          fluid: true,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 65
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_13___default.a, {
+        return react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_11___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_10___default.a, {
           href: "/",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 66
+            lineNumber: 25
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("a", {
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 66
+            lineNumber: 25
           },
           __self: this
-        }, "<")), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("h3", {
+        }, "<")), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("h3", {
           style: {
             textAlign: 'center'
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 67
+            lineNumber: 26
           },
           __self: this
-        }, title), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Row"], {
+        }, title), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 68
+            lineNumber: 27
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Col"], {
-          xs: 12,
-          md: 6,
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 69
+            lineNumber: 28
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_components_card__WEBPACK_IMPORTED_MODULE_10__["default"], {
-          title: "Location Type",
-          value: location_type,
+        }, "Location Type: "), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 69
+            lineNumber: 29
           },
           __self: this
-        })), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Col"], {
-          xs: 12,
-          md: 6,
+        }, location_type)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 70
+            lineNumber: 31
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_components_card__WEBPACK_IMPORTED_MODULE_10__["default"], {
-          title: "Timezone",
-          value: timezone_name,
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 70
+            lineNumber: 32
           },
           __self: this
-        }))), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Row"], {
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 73
+            lineNumber: 33
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Col"], {
-          xs: 12,
-          md: 6,
+        }, "Latitude"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 74
+            lineNumber: 34
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_components_card__WEBPACK_IMPORTED_MODULE_10__["default"], {
-          title: "Lattitude",
-          value: lat,
+        }, lat)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 74
+            lineNumber: 36
           },
           __self: this
-        })), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Col"], {
-          xs: 12,
-          md: 6,
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 75
+            lineNumber: 37
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_components_card__WEBPACK_IMPORTED_MODULE_10__["default"], {
-          title: "Longitude",
-          value: long,
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 75
+            lineNumber: 38
           },
           __self: this
-        }))), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Row"], {
+        }, "Longitude"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 77
+            lineNumber: 39
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Col"], {
-          xs: 12,
-          md: 6,
+        }, long)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 78
+            lineNumber: 41
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_components_card__WEBPACK_IMPORTED_MODULE_10__["default"], {
-          title: "Sunrise",
-          value: new Date(sun_rise).toLocaleTimeString(),
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 78
+            lineNumber: 42
           },
           __self: this
-        })), react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(react_flexbox_grid_dist_react_flexbox_grid__WEBPACK_IMPORTED_MODULE_12__["Col"], {
-          xs: 12,
-          md: 6,
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 79
+            lineNumber: 43
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_components_card__WEBPACK_IMPORTED_MODULE_10__["default"], {
-          title: "Sunset",
-          value: new Date(sun_set).toLocaleTimeString(),
+        }, "Timezone"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 79
+            lineNumber: 44
           },
           __self: this
-        }))));
+        }, timezone_name)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 46
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 47
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 48
+          },
+          __self: this
+        }, "Sunrise"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 49
+          },
+          __self: this
+        }, new Date(sun_rise).toLocaleTimeString())), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 51
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 52
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 53
+          },
+          __self: this
+        }, "Sunset"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Box"], {
+          width: 1 / 2,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 54
+          },
+          __self: this
+        }, new Date(sun_set).toLocaleTimeString())), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 56
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("h2", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 57
+          },
+          __self: this
+        }, "Weather"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_rebass_grid__WEBPACK_IMPORTED_MODULE_12__["Flex"], {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 58
+          },
+          __self: this
+        }, consolidated_weather.slice(0, 3).map(function (weather, key) {
+          return react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_components_weather_card__WEBPACK_IMPORTED_MODULE_13__["default"], Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, weather, {
+            key: key,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 60
+            },
+            __self: this
+          }));
+        })));
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 85
+          lineNumber: 67
         },
         __self: this
       }, "No data found.");
@@ -1384,7 +1527,7 @@ function (_Component) {
   }]);
 
   return LocationInformation;
-}(react__WEBPACK_IMPORTED_MODULE_8__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_11__["Component"]);
 
 
 
@@ -1399,6 +1542,17 @@ function (_Component) {
 
 module.exports = __webpack_require__(/*! /Users/clouduser/test/client/pages/location.tsx */"./pages/location.tsx");
 
+
+/***/ }),
+
+/***/ "@rebass/grid":
+/*!*******************************!*\
+  !*** external "@rebass/grid" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@rebass/grid");
 
 /***/ }),
 
@@ -1432,6 +1586,17 @@ module.exports = require("core-js/library/fn/get-iterator");
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/library/fn/json/stringify");
+
+/***/ }),
+
+/***/ "core-js/library/fn/object/assign":
+/*!***************************************************!*\
+  !*** external "core-js/library/fn/object/assign" ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/object/assign");
 
 /***/ }),
 
@@ -1575,17 +1740,6 @@ module.exports = require("prop-types-exact");
 /***/ (function(module, exports) {
 
 module.exports = require("react");
-
-/***/ }),
-
-/***/ "react-flexbox-grid/dist/react-flexbox-grid":
-/*!*************************************************************!*\
-  !*** external "react-flexbox-grid/dist/react-flexbox-grid" ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("react-flexbox-grid/dist/react-flexbox-grid");
 
 /***/ }),
 
